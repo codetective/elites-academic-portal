@@ -1,36 +1,27 @@
 import './App.css';
-import { Box, SimpleGrid, Stack, Text } from '@chakra-ui/react';
+import {
+  Box,
+  Container,
+  SimpleGrid,
+  Stack,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
+  Text,
+} from '@chakra-ui/react';
 import SectionTitle from './components/SectionTitle';
-import WrapContent from './components/Layout/WrapContent';
-
-import useGoogleSheets from 'use-google-sheets';
-import MaterialList from './components/MaterialList';
+import config from './config';
+import Year from './components/Year';
 
 const App = () => {
-  const { data, loading, error } = useGoogleSheets({
-    apiKey: import.meta.env.VITE_API_KEY,
-    sheetId: import.meta.env.VITE_APP_GOOGLE_SHEETS_ID,
-  });
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error!</div>;
-  }
-
-  // return <div>{JSON.stringify(data)}</div>;
-
   return (
     <Box>
-      <WrapContent>
+      <Container maxW='container.lg'>
         <Box py='80px'>
-          <SimpleGrid columns={[1, 1, 1, 2]} spacing='10' pos='relative'>
-            <Box
-              pos={['static', 'static', 'static', 'sticky']}
-              top='150px'
-              h='fit-content'
-            >
+          <SimpleGrid columns={[1, 1, 1, 1]} spacing='10' pos='relative'>
+            <Box>
               <Stack spacing='5'>
                 <SectionTitle>Elites&apos; Academic Repository</SectionTitle>
 
@@ -42,12 +33,51 @@ const App = () => {
                 </Text>
               </Stack>
             </Box>
-            <Stack spacing='5'>
-              <MaterialList entries={data} />
+            <Stack spacing='5' pb='40px'>
+              <Box py='5'>
+                <Text fontSize='xl' as='h1' fontWeight={'bold'}>
+                  What are you here for?
+                </Text>
+                <Text fontWeight={'light'}>
+                  Click the tabs below to toggle through available materials
+                </Text>
+              </Box>
+              <Tabs
+                defaultIndex={config.curentIndex}
+                isLazy
+                isFitted
+                variant='enclosed'
+                colorScheme='purple'
+              >
+                <TabList>
+                  <Tab>Rx2</Tab>
+                  <Tab>Rx3</Tab>
+                  <Tab>Rx4</Tab>
+                  <Tab>Rx5</Tab>
+                  <Tab>Misc</Tab>
+                </TabList>
+                <TabPanels>
+                  <TabPanel minH='60vh'>
+                    <Year id={config.yearTwo} />
+                  </TabPanel>
+                  <TabPanel minH='60vh'>
+                    <Year id={config.yearThree} />
+                  </TabPanel>
+                  <TabPanel minH='60vh'>
+                    <Year id={config.yearFour} />
+                  </TabPanel>
+                  <TabPanel minH='60vh'>
+                    <Year id={config.yearFive} />
+                  </TabPanel>
+                  <TabPanel minH='60vh'>
+                    <Year id={config.general} />
+                  </TabPanel>
+                </TabPanels>
+              </Tabs>
             </Stack>
           </SimpleGrid>
         </Box>
-      </WrapContent>
+      </Container>
     </Box>
   );
 };

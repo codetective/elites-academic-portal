@@ -5,21 +5,23 @@ import {
   Flex,
   Heading,
   HStack,
+  Image,
   Stack,
-  StackDivider,
   Text,
 } from '@chakra-ui/react';
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import courses from '../courses';
 import ListItem from './ListItem';
+import config from '../config';
+import em from '../assets/em.png';
 
 const variantBox = {
   hidden: { opacity: 0.5, x: 50 },
   show: { opacity: 1, x: 0 },
 };
 
-function MaterialList({ entries }) {
+function MaterialList({ entries, id }) {
   const [viewing, setViewing] = useState(null);
   const [list, setList] = useState([]);
 
@@ -43,44 +45,78 @@ function MaterialList({ entries }) {
 
   return (
     <Box>
-      <HStack justifyContent={'space-between'} pb='10'>
-        <Box>
-          <Text>Sort entries :</Text>
-        </Box>
-      </HStack>
-      <Text pos='relative' top='-20px' fontSize={'small'}>
-        Click below to see entries for ONLY selected course
-      </Text>
+      <Box>
+        <HStack justifyContent={'space-between'} pb='10'>
+          <Box>
+            <Text>Sort entries :</Text>
+          </Box>
+        </HStack>
+        <Text pos='relative' top='-20px' fontSize={'small'}>
+          Click below to see entries for ONLY selected course
+        </Text>
 
-      <Flex gap='5' flexWrap={'wrap'}>
-        <Button
-          onClick={() => setViewing(null)}
-          variant='outline'
-          colorScheme='purple'
-          bg={!viewing ? 'purple' : 'transparent'}
-        >
-          All
-        </Button>
-        {courses &&
-          courses.map((course) => {
-            if (course.trim() !== '') {
-              return (
-                <Button
-                  onClick={() => setViewing(course)}
-                  variant='outline'
-                  key={course + 'ccc'}
-                  textTransform='uppercase'
-                  colorScheme='purple'
-                  bg={viewing === course ? 'purple' : 'transparent'}
-                >
-                  {course}{' '}
-                </Button>
-              );
-            }
-          })}
-      </Flex>
-      <Stack divider={<StackDivider />} gap='5' py='10'>
-        <Box>
+        <Flex gap='5' flexWrap={'wrap'}>
+          <Button
+            onClick={() => setViewing(null)}
+            variant='outline'
+            colorScheme='purple'
+            bg={!viewing ? 'purple' : 'transparent'}
+            _hover={{
+              bg: 'green.900',
+            }}
+          >
+            All
+          </Button>
+          {id !== config.general && (
+            <>
+              <Button
+                onClick={() => setViewing('ASSIGNMENT')}
+                variant='outline'
+                colorScheme='purple'
+                bg={viewing === 'ASSIGNMENT' ? 'purple' : 'transparent'}
+                _hover={{
+                  bg: 'green.900',
+                }}
+              >
+                Assignment
+              </Button>
+              <Button
+                onClick={() => setViewing('SUMMARY')}
+                variant='outline'
+                colorScheme='purple'
+                bg={viewing === 'SUMMARY' ? 'purple' : 'transparent'}
+                _hover={{
+                  bg: 'green.900',
+                }}
+              >
+                Summary
+              </Button>
+            </>
+          )}
+          {courses &&
+            courses.map((course) => {
+              if (course.trim() !== '') {
+                return (
+                  <Button
+                    onClick={() => setViewing(course)}
+                    variant='outline'
+                    key={course + 'ccc'}
+                    textTransform='uppercase'
+                    colorScheme='purple'
+                    bg={viewing === course ? 'purple' : 'transparent'}
+                    _hover={{
+                      bg: 'green.900',
+                    }}
+                  >
+                    {course}{' '}
+                  </Button>
+                );
+              }
+            })}
+        </Flex>
+      </Box>
+      <Stack gap='5' py='10'>
+        <Box borderBottom='1px solid' pb='4' borderColor={'gray.600'}>
           <Text>
             Currently viewing from :{' '}
             <Text fontWeight='bold' as='span'>
@@ -109,8 +145,33 @@ function MaterialList({ entries }) {
               })}
         </Stack>
         {list && list.length === 0 && (
-          <Center flexDir='column' gap='5'>
-            <Heading>Wow! such empty</Heading>
+          <Center
+            flexDir='column'
+            gap='5'
+            fontStyle={'oblique'}
+            textAlign='center'
+            color='red.300'
+          >
+            <Image src={em} alt='empty' h='100px' />
+            {id === config.yearTwo && (
+              <Heading fontSize='xl'>Wow! such empty</Heading>
+            )}
+            {id === config.yearThree && (
+              <Heading fontSize='xl'>
+                Blame the academic team for this emptiness
+              </Heading>
+            )}
+            {id === config.yearFour && (
+              <Heading fontSize='xl'>
+                When you're in year 4, this will not be empty
+              </Heading>
+            )}
+            {id === config.yearFive && (
+              <Heading fontSize='xl'>Are you in year 5 yet? lol</Heading>
+            )}
+            {id === config.general && (
+              <Heading fontSize='xl'>No genaral materials posted yet</Heading>
+            )}
           </Center>
         )}
       </Stack>
