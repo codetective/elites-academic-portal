@@ -158,7 +158,7 @@ function MaterialList({ entries, id }) {
             )}
             {id === config.yearThree && (
               <Heading fontSize='xl'>
-                Blame the academic team for this emptiness
+                Year 3 materials will be available soon
               </Heading>
             )}
             {id === config.yearFour && (
