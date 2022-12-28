@@ -170,7 +170,7 @@ function MaterialList({ entries, id }) {
               <Heading fontSize='xl'>Are you in year 5 yet? lol</Heading>
             )}
             {id === config.general && (
-              <Heading fontSize='xl'>No genaral materials posted yet</Heading>
+              <Heading fontSize='xl'>No general materials posted yet</Heading>
             )}
           </Center>
         )}
