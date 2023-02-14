@@ -158,16 +158,16 @@ function MaterialList({ entries, id }) {
             )}
             {id === config.yearThree && (
               <Heading fontSize='xl'>
-                Year 3 materials will be available soon
+                Nothing dey here! Year 3 ginger! &#9996;
               </Heading>
             )}
             {id === config.yearFour && (
               <Heading fontSize='xl'>
-                When you're in year 4, this will not be empty
+                Stare at this empty list for goodluck!
               </Heading>
             )}
             {id === config.yearFive && (
-              <Heading fontSize='xl'>Are you in year 5 yet? lol</Heading>
+              <Heading fontSize='xl'> Year 5 no get materials for now </Heading>
             )}
             {id === config.general && (
               <Heading fontSize='xl'>No general materials posted yet</Heading>
